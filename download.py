@@ -71,8 +71,6 @@ def m3u8_parser():
     return m3u8
 
 
-if __name__ == "__main__":
-    DEST = LOC + OUTNAME
-    m3u8 = m3u8_parser()
-    segments = getSegsNum(m3u8)
-    dumpSegs(segments, DEST)
+# m3u8 = m3u8_parser()
+# segments = getSegsNum(m3u8)
+# dumpSegs(segments, DEST)
