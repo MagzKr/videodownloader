@@ -1,8 +1,6 @@
 """ download segmented mpeg video (.ts files) from streaming websites """
 import requests
 
-OUTNAME = 'video.ts'  # default output file name
-LOC = ""  # default save location
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:57.0) Gecko/20100101 Firefox/57.0",
@@ -27,7 +25,7 @@ def getSegsNum(m3):
     return segs
 
 
-def dumpSegs(segments, path):
+def dumpSegs(segments, path, window):
     """ downlaod and combine the .ts files
     given the first seg's url, the number of segments and
     the destination download path """
@@ -38,27 +36,27 @@ def dumpSegs(segments, path):
             seg = requests.get(url)
             f.write(seg.content)
             perc += i
-            print('Downloaded', '%.2f' % perc, '%')
+            window.setPlainText('Downloaded')
+# + '%.2f' % perc + '%'
 
-
-def m3u8_parser():
+def m3u8_parser(url, login = 'mid97@mail.ru' , password = 'qwerty'):
     s = requests.Session()
+    login_url = 'https://get.egorarslanov.ru/cms/system/login?required=true'
     data = {
             'action':'processXdget',
             'xdgetId':'99945',
             'params[action]': 'login',
-            'params[url]':	'https://get.egorarslanov.ru/cms/system/login?required=true',
-            'params[email]':	'mid97@mail.ru',
-            'params[password]':	'qwerty',
+            'params[url]':	login_url,
+            'params[email]':	login,
+            'params[password]':	password,
             'params[object_type]':	'cms_page',
             'params[object_id]':	'-1',
             'requestTime':	'1580323420',
             'requestSimpleSign':	'0ba52fcf1bee0dace58a5df2c04ff5cc',
     }
-    url = 'https://get.egorarslanov.ru/cms/system/login?required=true'
-    s.get(url)
-    s.post('https://get.egorarslanov.ru/cms/system/login?required=true', data)
-    r = s.get('https://get.egorarslanov.ru/pl/teach/control/lesson/view?id=98044439&editMode=0')
+    s.get(login_url)
+    s.post(login_url, data)
+    r = s.get(url)
     for i in r.text.splitlines():
         if '/player/' in i:
             r = s.get(i[i.find('https'): i.find('"></iframe>')])
@@ -70,7 +68,7 @@ def m3u8_parser():
     m3u8 = requests.get(r[-1])
     return m3u8
 
-
-# m3u8 = m3u8_parser()
-# segments = getSegsNum(m3u8)
-# dumpSegs(segments, DEST)
+def start_download(path, window, url):
+    m3u8 = m3u8_parser(url)
+    segments = getSegsNum(m3u8)
+    dumpSegs(segments, path, window)

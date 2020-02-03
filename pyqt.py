@@ -1,1 +1,1 @@
-import PyQt5
+'https://get.egorarslanov.ru/pl/teach/control/lesson/view?id=98044439&editMode=0'
