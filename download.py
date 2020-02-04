@@ -36,7 +36,7 @@ def dumpSegs(segments, path, window):
             seg = requests.get(url)
             f.write(seg.content)
             perc += i
-            window.setPlainText('Downloaded')
+            window.insertPlainText('Downloaded'+ '%.2f' % perc + '%')
 # + '%.2f' % perc + '%'
 
 def m3u8_parser(url, login = 'mid97@mail.ru' , password = 'qwerty'):
