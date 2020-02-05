@@ -4,21 +4,11 @@ import requests
 class DownloadingThread(QThread):
     progress_sign = pyqtSignal(int)
 
+
     def __init__(self, mainwindow, parent=None):
         super().__init__()
         self.mainwindow = mainwindow
-        self.HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:57.0) Gecko/20100101 Firefox/57.0",
-    "Accept": "*/*",
-    "Accept-Language": "en-US,en;q=0.5",
-    "Accept-Encoding": "gzip, deflate, br",
-    "Referer": '',
-    "DNT": "1",
-    "Connection": "keep-alive",
-    "Pragma": "no-cache",
-    "Cache-Control": "no-cache"
-}
-        print('hello')
+
 
     def getSegsNum(self, m3):
         """ figure out how many segments there are using the m3u8 file """
@@ -28,6 +18,7 @@ class DownloadingThread(QThread):
             if '.ts' in line:
                 self.segs.append(line)
         return self.segs
+
 
     def dumpSegs(self, segments, path):
         progress = 0
@@ -70,6 +61,7 @@ class DownloadingThread(QThread):
         r = r.text.splitlines()
         self.m3u8 = requests.get(r[-1])
         return self.m3u8
+
 
     def run(self):
         self.m3u8 = self.m3u8_parser(self.mainwindow.lineLink.text())
