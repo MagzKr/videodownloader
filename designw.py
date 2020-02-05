@@ -55,6 +55,7 @@ class Ui_VideoDownloader(object):
         self.horizontalLayout_3.addWidget(self.Password)
         self.linePassword = QtWidgets.QLineEdit(self.centralwidget)
         self.linePassword.setObjectName("linePassword")
+        self.linePassword.setEchoMode(QtWidgets.QLineEdit.Password)
         self.horizontalLayout_3.addWidget(self.linePassword)
         self.verticalLayout.addLayout(self.horizontalLayout_3)
         self.ConsoleLog = QtWidgets.QPlainTextEdit(self.centralwidget)

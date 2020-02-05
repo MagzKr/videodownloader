@@ -33,7 +33,7 @@ class DownloadingThread(QThread):
                 progress += i
                 self.progress_sign.emit(progress)
 
-    def m3u8_parser(self, url, login='mid97@mail.ru', password='qwerty'):
+    def m3u8_parser(self, url, login, password):
         s = requests.Session()
         login_url = 'https://get.egorarslanov.ru/cms/system/login?required=true'
         data = {
@@ -64,6 +64,8 @@ class DownloadingThread(QThread):
 
 
     def run(self):
-        self.m3u8 = self.m3u8_parser(self.mainwindow.lineLink.text())
+        self.m3u8 = self.m3u8_parser(url=self.mainwindow.lineLink.text(),
+                                     login=self.mainwindow.lineLogin.text(),
+                                     password=self.mainwindow.linePassword.text())
         self.segments = self.getSegsNum(self.m3u8)
-        self.dumpSegs(self.segments, self.mainwindow.SaveWay.text())
+        self.dumpSegs(self.segments, self.mainwindow.SavePath.text())
