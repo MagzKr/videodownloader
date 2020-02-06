@@ -21,8 +21,6 @@ class ExampleApp(QtWidgets.QMainWindow, designw.Ui_VideoDownloader):
         self.SavePath.insert(os.getcwd() + '\\video.mp4')
         self.DownloadingThread_inst = DownloadingThread(mainwindow=self)
         self.ProgressBar.setValue(0)
-        self.lineLogin.insert('mid97@mail.ru')
-        self.linePassword.insert('qwerty222')
 
     def browse_folder(self):
             options = QFileDialog.DontUseNativeDialog
