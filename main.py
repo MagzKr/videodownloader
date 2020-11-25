@@ -1,17 +1,15 @@
-import sys  # sys нужен для передачи argv в QApplication
+import sys
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QFileDialog
 import designw
-from downloadthread import DownloadingThread
+from downloadThread import DownloadingThread
 import os
 
 
 class ExampleApp(QtWidgets.QMainWindow, designw.Ui_VideoDownloader):
     def __init__(self):
-        # Это здесь нужно для доступа к переменным, методам
-        # и т.д. в файле design.py
         super().__init__()
-        self.setupUi(self)  # Это нужно для инициализации нашего дизайна
+        self.setupUi(self)
         self.initUI()
 
 
@@ -21,8 +19,6 @@ class ExampleApp(QtWidgets.QMainWindow, designw.Ui_VideoDownloader):
         self.SavePath.insert(os.getcwd() + '/video.mp4')
         self.DownloadingThread_inst = DownloadingThread(mainwindow=self)
         self.ProgressBar.setValue(0)
-        self.lineLogin.insert('mid97@mail.ru')
-        self.linePassword.insert('qwerty')
 
     def browse_folder(self):
             options = QFileDialog.DontUseNativeDialog
@@ -54,7 +50,7 @@ class ExampleApp(QtWidgets.QMainWindow, designw.Ui_VideoDownloader):
             self.DownloadButton.setEnabled(False)
             self.DownloadingThread_inst.progress_sign.connect(self.updateprogressbar)
             self.ConsoleLog.setPlainText('Видео загружается...')
-            self.DownloadingThread_inst.start()
+            self.DownloadingThread_inst.start() #start downloading
 
 
 
@@ -71,5 +67,5 @@ def main():
     window.show()  # Показываем окно
     app.exec_()  # и запускаем приложение
 
-if __name__ == '__main__':  # Если мы запускаем файл напрямую, а не импортируем
-    main()  # то запускаем функцию main()
+if __name__ == '__main__':
+    main()

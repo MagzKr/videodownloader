@@ -1,6 +1,6 @@
 from PyQt5.QtCore import QThread, pyqtSignal
 import requests
-
+from data import params
 class DownloadingThread(QThread):
     progress_sign = pyqtSignal(int)
 
@@ -36,20 +36,11 @@ class DownloadingThread(QThread):
     def m3u8_parser(self, url, login, password):
         s = requests.Session()
         login_url = 'https://get.egorarslanov.ru/cms/system/login?required=true'
-        data = {
-            'action': 'processXdget',
-            'xdgetId': '99945',
-            'params[action]': 'login',
-            'params[url]': login_url,
-            'params[email]': login,
-            'params[password]': password,
-            'params[object_type]': 'cms_page',
-            'params[object_id]': '-1',
-            'requestTime': '1580323420',
-            'requestSimpleSign': '0ba52fcf1bee0dace58a5df2c04ff5cc',
-        }
+        params['params[url]'] = login_url
+        params['params[email]'] = login
+        params['params[password]'] = password
         s.get(login_url)
-        s.post(login_url, data)
+        s.post(login_url, params)
         r = s.get(url)
         for i in r.text.splitlines():
             if '/player/' in i:
