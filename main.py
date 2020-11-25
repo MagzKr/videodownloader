@@ -16,7 +16,7 @@ class ExampleApp(QtWidgets.QMainWindow, designw.Ui_VideoDownloader):
     def initUI(self):
         self.DownloadButton.clicked.connect(self.startdownloading)
         self.SelWayButton.clicked.connect(self.browse_folder)
-        self.SavePath.insert(os.getcwd() + '/video.mp4')
+        self.SavePath.insert(os.getcwd() + '\\video.mp4')
         self.DownloadingThread_inst = DownloadingThread(mainwindow=self)
         self.ProgressBar.setValue(0)
 
@@ -33,8 +33,8 @@ class ExampleApp(QtWidgets.QMainWindow, designw.Ui_VideoDownloader):
 
 
     def startdownloading(self):
-        filename = self.SavePath.text().split('/')[-1]
-        path = '/'.join(self.SavePath.text().split('/')[:-1])
+        filename = self.SavePath.text().split('\\')[-1]
+        path = '\\'.join(self.SavePath.text().split('\\')[:-1])
         Error = True
         if filename in os.listdir(path):
             self.ConsoleLog.setPlainText('Файл с таким именем уже существует.')
